@@ -10,6 +10,9 @@ var counter int
 
 func main() {
 	http.HandleFunc("/count", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		if r.Method == http.MethodGet {
 			fmt.Fprintf(w, "%d", counter)
 		} else if r.Method == http.MethodPost {
