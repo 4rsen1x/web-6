@@ -1,9 +1,22 @@
 package main
 
-// здесь надо написать код
+import (
+	"fmt"
+	"net/http"
+)
 
 func main() {
-	// и здесь тоже
-}
+	http.HandleFunc("/api/user", func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
+		if name == "" {
+			name = "Guest"
+		}
+		fmt.Fprintf(w, "Hello,%s!", name)
+	})
 
-// и тут тоже (если очень надо)
+	// Запускаем сервер на порту 9000
+	err := http.ListenAndServe(":9000", nil)
+	if err != nil {
+		panic(err)
+	}
+}
